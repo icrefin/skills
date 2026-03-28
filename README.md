@@ -1,6 +1,6 @@
 # 个人技能库
 
-个人收集的 Claude Code 技能，用于增强 AI 辅助工作流。
+个人收集的Skill，用于增强 AI 辅助工作流。
 
 ## 可用技能
 
@@ -27,20 +27,8 @@ cp -r <技能名称> ~/.claude/skills/
 cp -r mrdang ~/.claude/skills/
 ```
 
-## 技能结构
-
-```
-<技能名称>/
-├── SKILL.md          # 技能定义（必需）
-├── README.md         # 使用文档（必需）
-└── scripts/          # Python 脚本（可选）
-    ├── __init__.py
-    └── *.py
-```
-
 ## 环境要求
 
-- Claude Code CLI
 - Python 3.10+（带 Python 脚本的技能需要）
 - 各技能所需的 API 密钥（详见各技能的 README）
 
