@@ -28,7 +28,6 @@ description: MR Dang 价值选股打分助手 - 根据 MR Dang 投资体系对 A
 |------|------|
 | `scripts/data.py` | 从 Tushare 获取股票数据 |
 | `scripts/search.py` | 通过 Tavily 搜索网络信息 |
-| `scripts/report.py` | 生成并保存分析报告 |
 
 所有脚本均遵循 **PEP 723** 标准，内置依赖声明，可直接用 `uv run` 执行，无需手动安装依赖。
 
@@ -194,7 +193,6 @@ uv run scripts/search.py extract results.json --max-length 500
 3. **数据缺失要标注【数据不足】，不隐瞒**
 4. **必须提示：本报告为投资参考，不构成投资建议**
 5. **银行股必须强调：PB 低不等于低估，要看资产质量**
-6. **必须保存报告到磁盘，默认保存到当前目录**
 
 ## 输出格式
 
@@ -329,13 +327,6 @@ uv run scripts/search.py extract results.json --max-length 500
 | `uv run scripts/search.py company <公司名> [--industry 行业]` | 搜索公司全面信息 |
 | `uv run scripts/search.py extract <json文件> [--max-length N]` | 提取搜索摘要 |
 
-### 报告生成 (scripts/report.py)
-
-| 命令 | 说明 |
-|------|------|
-| `uv run scripts/report.py generate --data <json文件> [--output <目录>]` | 生成并保存报告 |
-| `uv run scripts/report.py preview --data <json文件>` | 预览报告内容 |
-
 ## 示例执行流程
 
 **用户**：MR Dang 选股 `<股票名称>`
@@ -356,10 +347,7 @@ uv run scripts/search.py company <公司名称> --industry <行业>
 # 4. 执行评分规则（根据 SKILL 中的打分标准）
 # ... 计算 scores, screening, checklist ...
 
-# 5. 准备 JSON 数据文件，然后保存报告
-uv run scripts/report.py generate --data analysis.json --output ./
+# 5. 生成并输出分析报告
 ```
 
-**输出**：
-1. 在终端显示完整的选股打分报告
-2. 报告自动保存至当前目录 `./<股票名称>_<代码>_YYYYMMDD.md`
+**输出**：在终端显示完整的选股打分报告
