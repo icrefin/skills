@@ -1,0 +1,32 @@
+# This file belongs in .github/ISSUE_TEMPLATE/config.yml — GitHub only reads it from that
+# directory. It configures the "New issue" chooser for {{FULL_NAME}}.
+# Replace every {{...}} placeholder before committing.
+#
+# blank_issues_enabled: false removes the "Open a blank issue" button, so every report
+# goes through a structured form (and therefore carries the information you need).
+blank_issues_enabled: false
+
+# Optional: point people somewhere better than a blank issue. Uncomment and edit the
+# entries below. Each entry REQUIRES exactly these three keys: name, url, about.
+# GitHub rejects the whole file if a key is missing or if a URL is not http(s).
+#
+# contact_links:
+#   - name: Questions and usage help
+#     url: https://github.com/{{OWNER}}/{{REPO}}/discussions
+#     about: Ask and answer usage questions, and share what you built, in Discussions.
+#
+#   - name: Security vulnerability
+#     url: https://github.com/{{OWNER}}/{{REPO}}/security/advisories/new
+#     about: Report a vulnerability privately. Never open a public issue for security.
+#
+#   - name: Documentation
+#     url: {{HOMEPAGE}}
+#     about: Read the docs, guides, and examples before opening an issue.
+#
+#   - name: Contributing guide
+#     url: https://github.com/{{OWNER}}/{{REPO}}/blob/{{DEFAULT_BRANCH}}/CONTRIBUTING.md
+#     about: Read how to set up the project and submit a pull request.
+#
+#   - name: Community chat
+#     url: https://example.com/chat
+#     about: Join the chat for quick questions (replace with your real invite link).

@@ -1,0 +1,118 @@
+# {{REPO}}
+> {{TAGLINE_EN}}
+**English** | [中文](README.zh-CN.md)
+
+[![License](https://img.shields.io/github/license/{{FULL_NAME}}?style=flat-square&label=license)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/{{FULL_NAME}}?style=flat-square&display_name=tag&sort=semver)](https://github.com/{{FULL_NAME}}/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/{{FULL_NAME}}/ci.yml?style=flat-square&label=CI&branch={{DEFAULT_BRANCH}})](https://github.com/{{FULL_NAME}}/actions)
+[![Last commit](https://img.shields.io/github/last-commit/{{FULL_NAME}}?style=flat-square&branch={{DEFAULT_BRANCH}})](https://github.com/{{FULL_NAME}}/commits/{{DEFAULT_BRANCH}})
+[![Stars](https://img.shields.io/github/stars/{{FULL_NAME}}?style=flat-square&logo=github&label=stars)](https://github.com/{{FULL_NAME}}/stargazers)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-555?style=flat-square)
+![Language](https://img.shields.io/badge/Language-Python%203.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+
+<!-- Sibling file: README.zh-CN.md ({{TAGLINE_ZH}} / {{DESC_ZH}}) — keep both in sync:
+     same section order, same badges, same commands, same image paths. Topics to apply:
+     `gh repo edit {{FULL_NAME}} --add-topic {{TOPIC_LIST}}`. Badges read "no status"
+     or "0" until a LICENSE file, a release, a CI run and a first star exist. -->
+
+{{DESC_EN}} Also published on Gitee: {{GITEE_URL}} · Homepage: {{HOMEPAGE}}
+
+## Features
+
+- **One entry point** — install, configure and run with the commands below; no hidden steps.
+- **Safe by default** — dry-run mode prints every planned action before anything is written.
+- **Reviewable output** — results land in files you can diff, review and version.
+- **Small dependency surface** — a stock toolchain is enough; see [Requirements](#requirements).
+- **CI ready** — fails with a non-zero exit code and a readable message; ships a GitHub Actions workflow.
+
+## Screenshots
+
+<!-- Use demo or synthetic data only. Redact or blur anything private (real names, e-mail
+     addresses, tokens, internal hostnames) before committing an image. -->
+
+![Main window](docs/images/{{SCREENSHOT_1}})
+*Figure 1 — the main window running with the sample configuration.*
+
+![Result output](docs/images/{{SCREENSHOT_2}})
+*Figure 2 — a successful run; a live demo is at {{DEMO_URL}}.*
+
+## Requirements
+
+| Component | Minimum | Notes |
+| --- | --- | --- |
+| OS | Linux, macOS, Windows 11 (WSL2) | any platform with a supported runtime |
+| Runtime | Python 3.10 or Node.js 20 | whichever this project ships with |
+| Git | 2.40 | needed for the clone and push steps |
+| Docker (optional) | 24 | only for the container workflow |
+
+## Installation
+
+Check [Requirements](#requirements) first, then copy the lines that match your project.
+
+```bash
+git clone https://github.com/{{FULL_NAME}}.git
+cd {{REPO}} && git switch {{DEFAULT_BRANCH}}
+
+uv sync                   # install dependencies (Node.js projects: pnpm install)
+```
+
+## Quick start
+
+The options are documented in [Configuration](#configuration).
+
+```bash
+cp config.example.yml config.yml          # 1. start from the sample configuration
+$EDITOR config.yml                        # 2. replace the placeholders; never commit secrets
+{{REPO}} --config config.yml --dry-run    # 3. preview — nothing is written yet
+{{REPO}} --config config.yml              # 4. run for real ({{REPO}} = this project's entry point)
+```
+
+## Usage
+
+Run `{{REPO}} --help` for the full flag list; the settings most people touch are in [Configuration](#configuration).
+
+## Configuration
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `--config` | path | `config.yml` | configuration file to read |
+| `--dry-run` | flag | `false` | print the planned actions and write nothing |
+| `--api-key` | string | `$API_KEY` | API credential (`<YOUR_API_KEY>`); prefer the environment variable |
+| `--verbose` | flag | `false` | more log output, handy in a bug report |
+
+> **Note**: values such as `<YOUR_API_KEY>`, `you@example.com`, `192.0.2.10` and `Example Corp`
+> are **placeholders** — replace them before you run anything. Keep real credentials in
+> environment variables or a local, uncommitted `.env`; see [SECURITY.md](SECURITY.md).
+
+## FAQ
+
+**The sample command fails with an authentication error.** You are still using a placeholder
+credential — create a real one locally, pass it through an environment variable. See [Configuration](#configuration).
+
+**Should I edit both READMEs?** Yes: change `README.md` first, then mirror the edit into
+`README.zh-CN.md`. Section order, badges, commands and image paths stay identical.
+
+**How do I report a security problem?** Not in a public issue — follow [SECURITY.md](SECURITY.md)
+and write to {{EMAIL}}.
+
+## Roadmap
+
+- [ ] Publish the first stable release
+- [ ] Add a CI matrix for macOS and Windows
+- [ ] Provide an official container image
+- [ ] Add a third language to the documentation
+
+## License
+
+Released under the **{{LICENSE}}** license (SPDX identifier `{{LICENSE}}`); the full text is in
+[LICENSE](LICENSE).
+
+Copyright (c) {{YEAR}} {{AUTHOR}} <{{EMAIL}}>
+
+---
+
+<!-- Star CTA — delete this block if you would rather not ask for stars. -->
+If this project saves you time, a ⭐ helps other people find it — a [fork](https://github.com/{{FULL_NAME}}/fork) or an issue is just as welcome.
+
+[![Star History Chart](https://api.star-history.com/svg?repos={{FULL_NAME}}&type=Date)](https://star-history.com/#{{FULL_NAME}}&Date)

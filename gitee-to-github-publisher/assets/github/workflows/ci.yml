@@ -1,0 +1,109 @@
+# GitHub Actions CI template for {{FULL_NAME}}.
+# delete the job you do not need; this file belongs at .github/workflows/ci.yml
+#
+# Keep ONE of the two jobs below (python / node) and delete the other before committing.
+# Replace {{DEFAULT_BRANCH}} with the real default branch (e.g. main) and fill in any
+# remaining {{...}} placeholders. Action versions are pinned by major tag on purpose:
+# bump them deliberately, one at a time.
+#
+# Add the status badge to the README with:
+#   https://img.shields.io/github/actions/workflow/status/{{OWNER}}/{{REPO}}/ci.yml?branch={{DEFAULT_BRANCH}}
+name: CI
+
+on:
+  push:
+    branches: ["{{DEFAULT_BRANCH}}"]
+  pull_request:
+    branches: ["{{DEFAULT_BRANCH}}"]
+  # Manual run from the Actions tab.
+  workflow_dispatch:
+
+# Read-only by default. Add the minimum extra scope a job needs, never `write-all`.
+permissions:
+  contents: read
+
+# One run per branch/PR; a new push cancels the in-progress run instead of queueing it.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: "1"
+
+jobs:
+  # ===========================================================================
+  # JOB A — Python (uv). DELETE THIS ENTIRE JOB if the project is not Python.
+  # ===========================================================================
+  python:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        # Minimal matrix: the newest version you support plus the oldest, nothing more.
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          # version: "{{UV_VERSION}}"   # pin uv when reproducibility matters
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          # Alternative to a matrix: read the version from a file in the repo.
+          # Use one or the other, not both, and keep the file in sync.
+          # python-version-file: ".python-version"
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Test
+        run: uv run pytest -q
+
+  # ===========================================================================
+  # JOB B — Node (pnpm through corepack). DELETE THIS ENTIRE JOB if not Node.
+  # ===========================================================================
+  node:
+    name: Node ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["20", "22"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          # `cache: "pnpm"` needs pnpm present before this step runs. Enable corepack
+          # first (as below) or add pnpm/action-setup@v4 above this step, then uncomment:
+          # cache: "pnpm"
+          # registry-url: "https://registry.npmjs.org"   # needed only for `npm publish`
+
+      - name: Enable corepack (provides pnpm from packageManager in package.json)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint --if-present
+
+      - name: Test
+        run: pnpm test --if-present
+
+      - name: Build
+        run: pnpm run build --if-present

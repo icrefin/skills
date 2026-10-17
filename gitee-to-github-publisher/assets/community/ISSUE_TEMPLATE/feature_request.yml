@@ -1,0 +1,115 @@
+# This file belongs in .github/ISSUE_TEMPLATE/feature_request.yml — GitHub only reads
+# issue forms from that directory (or .github/ISSUE_TEMPLATE/ at the repository root).
+# Replace every {{...}} placeholder before committing. English only: GitHub renders the
+# form chrome with the user's own interface language.
+name: Feature request
+description: Propose a change or addition to {{REPO}}
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the problem first, then the solution. Requests that explain a real use
+        case are far more likely to be implemented. One request per issue, please.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checklist
+      options:
+        - label: I searched existing issues and discussions and did not find a duplicate.
+          required: true
+        - label: This request is about this project, not about a third-party dependency.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What are you trying to do, and what blocks you today?
+      placeholder: "I want to ... but currently I have to ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: The change you want, including a rough API, CLI flag, or config shape.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches, existing workarounds, or similar features elsewhere.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the project does this touch?
+      options:
+        - Core functionality
+        - CLI or configuration
+        - API or library interface
+        - Documentation or examples
+        - Performance
+        - Packaging, CI, or release
+        - Other (describe below)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: breaking
+    attributes:
+      label: Would this break existing users?
+      options:
+        - "No — additive change"
+        - "Yes — it changes existing behavior or interfaces"
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example usage
+      description: Show how the feature would look from a user's point of view.
+      render: shell
+      placeholder: |
+        # e.g.
+        {{REPO}} --new-flag value
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Version you are running
+      placeholder: "v0.1.0 or {{DEFAULT_BRANCH}}"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Willingness to contribute
+      options:
+        - label: I can open a pull request for this.
+          required: false
+        - label: I can help with testing or documentation.
+          required: false
+
+  - type: checkboxes
+    id: conduct
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct.
+          required: true

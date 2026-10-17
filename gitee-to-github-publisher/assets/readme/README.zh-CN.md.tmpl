@@ -1,0 +1,118 @@
+# {{REPO}}
+> {{TAGLINE_ZH}}
+[English](README.md) | **中文**
+
+[![License](https://img.shields.io/github/license/{{FULL_NAME}}?style=flat-square&label=license)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/{{FULL_NAME}}?style=flat-square&display_name=tag&sort=semver)](https://github.com/{{FULL_NAME}}/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/{{FULL_NAME}}/ci.yml?style=flat-square&label=CI&branch={{DEFAULT_BRANCH}})](https://github.com/{{FULL_NAME}}/actions)
+[![Last commit](https://img.shields.io/github/last-commit/{{FULL_NAME}}?style=flat-square&branch={{DEFAULT_BRANCH}})](https://github.com/{{FULL_NAME}}/commits/{{DEFAULT_BRANCH}})
+[![Stars](https://img.shields.io/github/stars/{{FULL_NAME}}?style=flat-square&logo=github&label=stars)](https://github.com/{{FULL_NAME}}/stargazers)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-555?style=flat-square)
+![Language](https://img.shields.io/badge/Language-Python%203.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+
+<!-- 姊妹文件：README.md（英文主 README，{{TAGLINE_EN}} / {{DESC_EN}}）——两份文件必须保持同步：
+     章节顺序、徽章、命令、图片路径完全一致。仓库 topics 用这条命令设置：
+     `gh repo edit {{FULL_NAME}} --add-topic {{TOPIC_LIST}}`。仓库还没有 LICENSE 文件、
+     Release、CI 运行记录和第一个 star 时，徽章会显示 no status 或 0。 -->
+
+{{DESC_ZH}} 本仓库同时发布在 Gitee：{{GITEE_URL}} · 项目主页：{{HOMEPAGE}}
+
+## 功能特性
+
+- **一条命令跑通** —— 安装、配置、运行都写在下面的命令里，没有隐藏步骤。
+- **默认安全** —— dry-run 模式先打印将要执行的操作，确认无误后再落盘。
+- **产物可审查** —— 结果输出为普通文件，可以 diff、review，也能纳入版本管理。
+- **依赖极少** —— 标准工具链即可运行，详见[环境要求](#环境要求)。
+- **对 CI 友好** —— 失败时返回非零退出码并给出可读的错误信息，自带 GitHub Actions 工作流。
+
+## 截图
+
+<!-- 截图请使用演示或合成数据；提交前务必对真实姓名、邮箱、token、内网主机名等
+     隐私信息做打码或模糊处理。 -->
+
+![主界面](docs/images/{{SCREENSHOT_1}})
+*图 1 —— 使用示例配置运行时的主界面。*
+
+![运行结果](docs/images/{{SCREENSHOT_2}})
+*图 2 —— 运行成功后的输出；在线演示见 {{DEMO_URL}}。*
+
+## 环境要求
+
+| 组件 | 最低版本 | 说明 |
+| --- | --- | --- |
+| 操作系统 | Linux、macOS、Windows 11（WSL2） | 能运行受支持的运行时即可 |
+| 运行时 | Python 3.10 或 Node.js 20 | 以项目实际使用的为准 |
+| Git | 2.40 | 克隆和推送时用到 |
+| Docker（可选） | 24 | 仅在容器流程中需要 |
+
+## 安装
+
+先对照[环境要求](#环境要求)确认版本，再复制与你的项目类型对应的命令。
+
+```bash
+git clone https://github.com/{{FULL_NAME}}.git
+cd {{REPO}} && git switch {{DEFAULT_BRANCH}}
+
+uv sync                   # 安装依赖（Node.js 项目请用 pnpm install）
+```
+
+## 快速开始
+
+各个选项的含义见[配置项](#配置项)。
+
+```bash
+cp config.example.yml config.yml          # 1. 从示例配置开始
+$EDITOR config.yml                        # 2. 替换占位符；切勿提交真实凭据
+{{REPO}} --config config.yml --dry-run    # 3. 预演，不会写入任何内容
+{{REPO}} --config config.yml              # 4. 正式运行（{{REPO}} 指本项目的入口命令）
+```
+
+## 使用说明
+
+运行 `{{REPO}} --help` 可以查看全部参数；日常真正会调的设置都在[配置项](#配置项)里。
+
+## 配置项
+
+| 选项 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `--config` | path | `config.yml` | 要读取的配置文件 |
+| `--dry-run` | flag | `false` | 只打印将要执行的操作，不写入任何内容 |
+| `--api-key` | string | `$API_KEY` | API 凭据（`<YOUR_API_KEY>`），推荐用环境变量传入 |
+| `--verbose` | flag | `false` | 输出更详细的日志，排查问题时好用 |
+
+> **注意**：`<YOUR_API_KEY>`、`you@example.com`、`192.0.2.10`、`Example Corp` 等取值都是**占位符**，
+> 使用前请替换为你自己的内容。真实凭据请放在环境变量或本地未提交的 `.env` 中，
+> 更多说明见 [SECURITY.md](SECURITY.md)。
+
+## 常见问题
+
+**示例命令报认证失败怎么办？** 说明你用的还是占位符凭据。请在本地生成真实凭据，
+通过环境变量传入，并确保这个文件不被 Git 跟踪。参见[配置项](#配置项)。
+
+**两个 README 都要改吗？** 要。先改 `README.md`，再把改动同步到 `README.zh-CN.md`：
+章节顺序、徽章、命令和图片路径保持一致，只有正文和锚点随语言变化。
+
+**安全问题怎么报告？** 请不要开公开 issue，按 [SECURITY.md](SECURITY.md) 的说明
+发邮件到 {{EMAIL}}。
+
+## 路线图
+
+- [ ] 发布第一个稳定版本
+- [ ] 增加 macOS 与 Windows 的 CI 矩阵
+- [ ] 提供官方容器镜像
+- [ ] 文档再支持第三种语言
+
+## 许可证
+
+本项目基于 **{{LICENSE}}** 许可证发布（SPDX 标识符 `{{LICENSE}}`），完整条款见
+[LICENSE](LICENSE)。
+
+Copyright (c) {{YEAR}} {{AUTHOR}} <{{EMAIL}}>
+
+---
+
+<!-- 求 Star 区块 —— 不想求 Star 的话可以整段删掉。 -->
+如果这个项目帮你省了时间，欢迎点个 ⭐，让更多人能找到它 —— 提 [issue](https://github.com/{{FULL_NAME}}/issues) 或 fork 同样欢迎。
+
+[![Star 增长曲线](https://api.star-history.com/svg?repos={{FULL_NAME}}&type=Date)](https://star-history.com/#{{FULL_NAME}}&Date)

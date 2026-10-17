@@ -1,0 +1,125 @@
+# This file belongs in .github/ISSUE_TEMPLATE/bug_report.yml — GitHub only reads issue
+# forms from that directory (or .github/ISSUE_TEMPLATE/ at the repository root).
+# Replace every {{...}} placeholder before committing. English only: GitHub renders the
+# form chrome with the user's own interface language.
+name: Bug report
+description: Report a reproducible defect in {{REPO}} so it can be fixed
+title: "[Bug]: "
+labels:
+  - bug
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Fill in every field — incomplete reports are hard to
+        act on. Redact secrets, tokens, private keys, internal hostnames, and personal
+        data; use placeholders such as `192.0.2.10`, `you@example.com`, `<YOUR_API_KEY>`.
+
+        **Security vulnerability?** Stop and read SECURITY.md instead. Never open a
+        public issue for a vulnerability.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checklist
+      description: Confirm each item before submitting.
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: I am running the latest release or a recent commit of {{DEFAULT_BRANCH}}.
+          required: true
+        - label: This is not a security vulnerability (those go through SECURITY.md).
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Release tag, version number, or commit SHA where the bug occurs.
+      placeholder: "v0.1.0 or 1a2b3c4"
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, runtime version, and how you installed the project.
+      placeholder: "Ubuntu 24.04, Python 3.12.4, uv sync / macOS 15, Node 22.11, pnpm install"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Exact, minimal steps. Number them. Include the command or the UI path.
+      placeholder: |
+        1. Run `...`
+        2. Set `...`
+        3. Observe `...`
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened, including the full error text.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, stack trace, or screenshots
+      description: Paste raw output, not a screenshot of text, where possible.
+      render: text
+    validations:
+      required: false
+
+  - type: input
+    id: config
+    attributes:
+      label: Relevant configuration
+      description: Non-default settings that matter, with secrets replaced by placeholders.
+      placeholder: "timeout=30, retries=3 (defaults otherwise)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: regression
+    attributes:
+      label: Did this work before?
+      options:
+        - "No — first time using this feature"
+        - "Yes — it regressed in a later version"
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Workaround
+      description: Anything that makes the bug go away, even partly.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: conduct
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct.
+          required: true

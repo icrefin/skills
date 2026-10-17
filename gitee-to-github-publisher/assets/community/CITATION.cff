@@ -1,0 +1,62 @@
+# CITATION.cff — optional, academic-only. / 可选，仅供学术引用。
+#
+# Enable this file ONLY if researchers may cite the software itself (a methods paper, a
+# benchmark, a tool with a DOI). GitHub renders a "Cite this repository" button from it.
+# For an ordinary application this file adds noise, so delete it if nobody will cite it.
+# 仅当软件本身可能被学术引用（方法论文、基准测试、带 DOI 的工具）时才保留本文件，
+# GitHub 会据此显示 “Cite this repository” 按钮。普通应用留着只是噪音，无人引用就删掉。
+#
+# Install at the REPOSITORY ROOT as CITATION.cff (not under .github/).
+# 安装位置：仓库根目录的 CITATION.cff（不要放进 .github/）。
+# Replace every {{...}} placeholder. Keep `license` a valid SPDX identifier.
+# 请替换所有 {{...}} 占位符；`license` 必须是合法的 SPDX 标识符。
+# Validate with: https://citation-file-format.github.io/cff-initializer-javascript/
+cff-version: 1.2.0
+message: "If you use this software in academic work, please cite it using the metadata below."
+title: "{{REPO}} — {{DESC_EN}}"
+# 中文标题占位符 / Chinese title placeholder: {{DESC_ZH}}
+type: software
+authors:
+  - family-names: "Your"
+    given-names: "Name"
+    # Placeholders only — replace with the real author. Never commit a real person's
+    # private email without their consent.
+    # 以下均为占位符 —— 请替换为真实作者。未经同意不要提交他人的私人邮箱。
+    email: "you@example.com"
+    affiliation: "Example Corp"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+    # website: "{{HOMEPAGE}}"
+  # Add co-authors by repeating the block, or use the organization form:
+  # - name: "Example Corp"
+  #   website: "https://example.com"
+contact:
+  - family-names: "Your"
+    given-names: "Name"
+    email: "you@example.com"
+    affiliation: "Example Corp"
+# SPDX identifier, e.g. MIT, Apache-2.0, GPL-3.0-or-later, BSD-3-Clause.
+# SPDX 标识符，例如 MIT、Apache-2.0、GPL-3.0-or-later、BSD-3-Clause。
+license: "{{LICENSE}}"
+repository-code: "https://github.com/{{OWNER}}/{{REPO}}"
+url: "{{HOMEPAGE}}"
+keywords:
+  - "{{REPO}}"
+  - "open source"
+  - "{{DESC_EN}}"
+abstract: >-
+  {{REPO}} ({{FULL_NAME}}) is {{DESC_EN}}.
+  {{REPO}}（{{FULL_NAME}}）是{{DESC_ZH}}。
+# Release metadata — uncomment and fill in for a specific release.
+# 发布元数据 —— 需要标注具体版本时取消注释并填写。
+# version: "0.1.0"
+# date-released: "{{YEAR}}-01-01"
+# doi: "10.5281/zenodo.0000000"
+# preferred-citation:
+#   type: article
+#   title: "Paper title"
+#   authors:
+#     - family-names: "Your"
+#       given-names: "Name"
+#   year: {{YEAR}}
+#   journal: "Journal Name"
+#   doi: "10.0000/example"
