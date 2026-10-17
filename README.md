@@ -9,6 +9,7 @@
 | [mrdang](./mrdang/) | MR Dang 价值选股打分助手 - A股价值投资分析工具 | ✅ 可用 |
 | [show-me-arch](./show-me-arch/) | 可视化解释助手 - 选最小视图讲清楚，需要架构图时用 Archify 渲染并嵌入 HTML 页面 | ✅ 可用 |
 | [zcode-session-import](./zcode-session-import/) | 会话导入助手 - 把 ZCode / opencode 聊天记录转成 DSH 原生可续聊会话，附 v4 日志格式参考与校验器 | ✅ 可用 |
+| [dsh-plugin-creator](./dsh-plugin-creator/) | DSH 插件开发助手 - 构建、验证并打包 DeepSeek Harness (dsh) 插件为可安装的 npm bundle | ✅ 可用 |
 
 ## 安装
 
@@ -41,17 +42,25 @@ cp -r show-me-arch ~/.claude/skills/
 cp -r zcode-session-import ~/.claude/skills/
 ```
 
+### 安装 dsh-plugin-creator 技能
+
+```bash
+# 该技能面向 DeepSeek Harness
+cp -r dsh-plugin-creator ~/.dsh/skills/
+```
+
 也可以装到 DeepSeek Harness：
 
 ```bash
 cp -r show-me-arch ~/.dsh/skills/
 cp -r zcode-session-import ~/.dsh/skills/
+cp -r dsh-plugin-creator ~/.dsh/skills/
 ```
 
 ## 环境要求
 
 - Python 3.10+（带 Python 脚本的技能需要）
-- Node.js 18+（show-me-arch 需要；无第三方依赖，无需 `npm install`）
+- Node.js 18+（show-me-arch 与 dsh-plugin-creator 需要；无第三方依赖，无需 `npm install`）
 - 各技能所需的 API 密钥（详见各技能的 README）
 - `zcode-session-import` 额外需要 `zstd` 命令行工具（缺失时回退到 Node 24 的 `zlib`）
 

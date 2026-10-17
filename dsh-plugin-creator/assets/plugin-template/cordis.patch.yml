@@ -1,0 +1,14 @@
+# __PLUGIN_NAME__ bundle patch: inserts this plugin's Loader row into a
+# profile's roster. Applied as a profile bundle layer (the `dsh.bundle.patch`
+# manifest field) over dsh-base.
+#
+# The row is a bare plugin by package name: the host half (exports ".") runs in
+# the host process, and the `dsh.client` declaration in package.json loads the
+# browser half (exports "./client") in the web GUI.
+#
+# The row id is the plugin's identity in the composed tree and the id targeted
+# by user patches in <profile>/cordis.patch.yml. Renaming it breaks those
+# overrides, so pick it once.
+- insert:
+    - id: __PLUGIN_ID__
+      name: '__PLUGIN_NAME__'

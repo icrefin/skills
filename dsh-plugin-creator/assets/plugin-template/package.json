@@ -1,0 +1,83 @@
+{
+  "name": "__PLUGIN_NAME__",
+  "version": "0.1.0",
+  "description": "__PLUGIN_DESCRIPTION__",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "cordis-plugin"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.17.0",
+    "dsh": "__DSH_VERSION__"
+  },
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && tsdown",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.client.json",
+    "test": "vitest run",
+    "check": "pnpm typecheck && pnpm build && pnpm test",
+    "pack": "pnpm build && pnpm pack --pack-destination dist"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-client-locale": "__DSH_VERSION__",
+    "@deepseek-ai/dsh-client-ui-layout": "__DSH_VERSION__",
+    "@deepseek-ai/dsh-client-ui-sidebar": "__DSH_VERSION__",
+    "@deepseek-ai/dsh-host-webserver": "__DSH_VERSION__",
+    "@deepseek-ai/schemastery": "^3.18.3",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-client-locale": "__DSH_VERSION__",
+    "@deepseek-ai/dsh-client-ui-layout": "__DSH_VERSION__",
+    "@deepseek-ai/dsh-client-ui-sidebar": "__DSH_VERSION__",
+    "@deepseek-ai/dsh-client-ui-slots": "__DSH_VERSION__",
+    "@deepseek-ai/dsh-host-webserver": "__DSH_VERSION__",
+    "@deepseek-ai/schemastery": "^3.18.3",
+    "@types/node": "^22.20.0",
+    "@types/react": "~18.3.1",
+    "@types/react-dom": "~18.3.0",
+    "jsdom": "^30.1.1",
+    "react": "^18.2.0",
+    "react-dom": "18.2.0",
+    "tsdown": "^0.22.2",
+    "typescript": "^5.7.2",
+    "unrun": "^0.3.1",
+    "vitest": "^3.0.0"
+  }
+}

@@ -1,0 +1,6 @@
+# pnpm 11 reads build-script approval from this file, not from package.json
+# (`pnpm.onlyBuiltDependencies` there is warned about and ignored). esbuild's
+# postinstall is what makes vitest and tsdown usable, so approve exactly that
+# one rather than running every dependency's install script.
+allowBuilds:
+  esbuild: true
