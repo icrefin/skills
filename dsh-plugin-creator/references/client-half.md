@@ -56,9 +56,10 @@ Consequences worth knowing:
 
 You do not have to write this file by hand. `tsdown` does it: the template's
 `tsdown.config.ts` emits CJS with the loader banner/footer around a normal TSX
-entry, and `external: ['react', 'react/jsx-runtime']` keeps React as the seed.
-Everything else is bundled in, which is why the client half needs no runtime
-dependencies.
+entry, and `deps: { neverBundle: ['react', 'react/jsx-runtime'] }` keeps React as
+the seed. Everything else is bundled in, which is why the client half needs no
+runtime dependencies. Use `neverBundle`, not the top-level `external` that tsdown
+deprecated — `external` still works but warns on every build with tsdown 0.22.x.
 
 ## Manifest
 
@@ -177,7 +178,7 @@ node scripts/dsh-sdk.mjs slots conversation # filter
 node scripts/dsh-sdk.mjs read dsh-client-ui-layout README.md
 ```
 
-`references/surfaces.md` carries the catalogue captured from dsh 0.2.0-rc.2 and
+`references/surfaces.md` carries the catalogue captured from dsh 0.2.1-rc.2 and
 the recipes for going deeper. Pick a seat that already allocates space; a
 decoration belongs in a slot with room, not in an overlay you position by hand.
 

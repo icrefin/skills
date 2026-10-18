@@ -39,7 +39,7 @@ save.
   "name": "my-plugin",
   "version": "0.1.0",
   "type": "module",
-  "engines": { "node": ">=22.17.0", "dsh": "0.2.0-rc.2" },
+  "engines": { "node": ">=22.17.0", "dsh": "0.2.1-rc.2" },
   "main": "lib/index.js",
   "exports": {
     ".": { "types": "./lib/types/index.d.ts", "default": "./lib/index.js" },
@@ -58,9 +58,14 @@ save.
 
 - `dsh.bundle.patch` is one patch path or an ordered list of them, each relative
   to the package root; the launcher applies a list in order as one bundle layer.
-- `engines.dsh` is an author-declared compatible range. Pin peer versions to the
-  runtime you build against — `node scripts/dsh-sdk.mjs version` prints it — so a
-  mismatch surfaces at install instead of at activation.
+- `engines.dsh` is an **author-declared** range, and nothing enforces it. The
+  runtime's own manifest contract (`dsh-package-manifest`) states that current
+  installers and loaders check neither `dsh.manifestVersion` nor `engines.dsh`,
+  and that a declared range is not even SemVer-validated. Declare it anyway —
+  `node scripts/dsh-sdk.mjs version` prints the runtime to pin against, and this
+  is the only machine-readable record of what the plugin was built for — but do
+  not expect a wrong host to be rejected for you. A version mismatch shows up as
+  a runtime failure, not an install failure.
 - `exports["./package.json"]` matters: the plugin inventory and the plugin hub
   read the manifest without activating the plugin.
 

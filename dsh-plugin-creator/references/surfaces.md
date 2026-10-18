@@ -9,7 +9,7 @@ harness already runs. Decide the surface before writing the view.
 
 - [The four shapes a plugin can take](#the-four-shapes-a-plugin-can-take)
 - [Finding the extension point](#finding-the-extension-point)
-- [Documented UI seats (dsh 0.2.0-rc.2)](#documented-ui-seats-dsh-020-rc2)
+- [Documented UI seats (dsh 0.2.1-rc.2)](#documented-ui-seats-dsh-021-rc2)
 - [Host extension points](#host-extension-points)
 - [Verification limits](#verification-limits)
 
@@ -76,12 +76,16 @@ They carry the full `declare module '@deepseek-ai/cordis'` augmentation, so
 This is also what makes `tsc` catch a bad slot registration instead of the
 browser console doing it.
 
-## Documented UI seats (dsh 0.2.0-rc.2)
+## Documented UI seats (dsh 0.2.1-rc.2)
 
-Captured from the shipped packages' READMEs. The catalogue is not exhaustive —
-some seats appear only in code — so confirm with `slots` and by reading the
-owner's README. A seat marked *occupied* already has an owner; register into the
-seats **inside** it rather than replacing it, unless replacing is the goal.
+Reconciled against the live ledger in 0.2.1-rc.2: `node scripts/dsh-sdk.mjs slots`
+reports 76 documented seat ids, and every id below is one of them unless its note
+says otherwise. The catalogue is not exhaustive in the other direction either —
+some seats are declared only in code and no README mentions them (`root` is one),
+so `slots` never lists them. Confirm a seat with the owner's README and
+`node scripts/dsh-sdk.mjs find '<pattern>'` before concluding it does not exist. A
+seat marked *occupied* already has an owner; register into the seats **inside**
+it rather than replacing it, unless replacing is the goal.
 
 ### Shell
 
@@ -89,7 +93,8 @@ seats **inside** it rather than replacing it, unless replacing is the goal.
 |---|---|---|
 | `shell.leading` | single | frame top-left window-chrome seat; occupied by the sidebar's controls on macOS |
 | `shell.overlay` | — | viewport overlay layer for dialogs and transient surfaces |
-| `root` | single | the renderer's one root occupant; owning product layout. Do not register here |
+| `shell.bottom` | — | frame bottom seat, added in 0.2.1-rc.2 |
+| `root` | single | the renderer's one root occupant, owning product layout. Do not register here. **Code-only**: declared in `dsh-client-ui-layout` but in no README, so `slots` never lists it |
 
 ### Left column
 
@@ -100,6 +105,9 @@ seats **inside** it rather than replacing it, unless replacing is the goal.
 | `sidebar.brand.mark`, `sidebar.brand.name` | single | brand mark and wordmark |
 | `sidebar.toggle.badge` | single | non-interactive badge on the collapsed expand button |
 | `sidebar.workspaces` | — | *occupied* — the workspace/session browser |
+| `sidebar.workspaces.directoryFlow` | single | the directory-flow child hole the picker composition fills |
+| `sidebar.workspaces.session.menu.item`, `sidebar.workspaces.session.row.action` | list | per-session-row menu entries and hover buttons. The browser's own Pin / Rename / Fork / Archive / Copy-ID actions are themselves entries, so an added action lands wherever its `order` puts it |
+| `sidebar.chat.conversation` | — | a session rendered as a sidebar chat, declared by the subagent surface |
 | `sidebar.settings` | — | *occupied* — the bottom-pinned Settings trigger |
 | `sidebar.session.row.leading`, `sidebar.session.row.hover` | — | per-session-row seats |
 | `sidebar.footer.action` | — | footer action row |
@@ -108,34 +116,60 @@ seats **inside** it rather than replacing it, unless replacing is the goal.
 
 | Seat | Kind | Notes |
 |---|---|---|
-| `main` | keyed | **global pages.** `conversation` is reserved for the Conversation |
+| `main` | keyed | **global pages.** `conversation` is reserved for the Conversation; the live ledger spells that entry `main.conversation` |
 | `conversation.header`, `conversation.content`, `conversation.view` | — | *occupied* — the Conversation shell |
 | `conversation.composer` / `conversation.composer.dock` | — | below and inside the composer; `dock` is the safest decoration seat |
 | `conversation.chat.node` | keyed | **Chat rows**, dispatched by the event definition's `kind` |
 | `conversation.chat.turnTail` | — | after the last row of a turn |
-| `conversation.input.activity`, `.attachments`, `.dock`, `.model`, `.overlay`, `.permission`, `.plan` | — | input-area seats. `.model` is **occupied** by the shipped model picker at priority `0`, so a plugin changes it by shadowing — see [`replacing-shipped-ui.md`](replacing-shipped-ui.md) |
-| `conversation.session`, `conversation.session.header.corner`, `.utilities` | — | session-scoped header seats |
-| `conversation.message.images`, `conversation.trajectory.images` | — | image renderers |
+| `conversation.input.model` | single | **occupied** by the shipped model picker at priority `0`, so a plugin changes it by shadowing — see [`replacing-shipped-ui.md`](replacing-shipped-ui.md) |
+| `conversation.input.model.label` | — | the model trigger's label child, added in 0.2.1-rc.2 |
+| `conversation.input.activity`, `conversation.input.dock`, `conversation.input.overlay`, `conversation.input.permission`, `conversation.input.plan` | — | the remaining input-area seats. Register with the full id: the `.name` form is shorthand **in this table only**. There is no `conversation.input.attachments` seat in 0.2.1-rc.2 |
+| `conversation.session`, `conversation.session.header.corner`, `conversation.session.header.utilities` | — | session-scoped header seats; `.utilities` is a **sibling** of `.corner`, not a child of it |
+| `conversation.chat.message.images`, `conversation.chat.user.images`, `conversation.images.content`, `conversation.trajectory.images` | — | the four image renderers. `conversation.message.images` existed before 0.2.1-rc.2 and is gone — registering it fails |
+| `conversation.chat.flow`, `conversation.chat.message.images`, `conversation.chat.reasoning.body`, `conversation.chat.reasoning.content`, `conversation.chat.user.content`, `conversation.chat.user.images` | — | per-row Chat renderers, added in 0.2.1-rc.2 |
+| `conversation.user.text`, `conversation.user.text.node` | — | the user-text pipeline: a whole user turn, and one node of its document |
 | `conversation.hero.brand.mark`, `conversation.hero.workspace.directoryFlow` | — | the empty-state hero |
 
 ### Settings
 
 | Seat | Kind | Notes |
 |---|---|---|
-| `settings.shell`, `settings.launcher`, `settings.onboarding`, `settings.describe` | — | *occupied* — the settings domain |
+| `settings.shell`, `settings.launcher`, `settings.onboarding`, `settings.describe`, `settings.describe.writable` | — | *occupied* — the settings domain |
 | `settings.section` | — | a settings section entry |
 | `settings.general.item` | — | a row on the General page |
 | `settings.models.footer` | — | the Models page's page-wide extension area |
 | `settings.plugins.tab` | — | a tab on the Plugins page |
 | `settings.agentLoop` | — | agent-loop settings |
+| `settings.mutate`, `settings.replace`, `settings.update` | keyed | the settings service's three write operations, exposed as seats by the API controller. Each returns the namespace's new redacted view; a stale write reports `settings-conflict` |
+| `settings.yaml`, `settings.yaml.imported` | keyed | the YAML settings pipeline, and the hook that runs after an import |
+
+These settings seats are **data** seats, not UI: they carry a namespace's value
+through the settings service rather than rendering a card. The rendering seats are
+the `settings.section` / `settings.general.item` / `settings.models.footer` rows
+above.
 
 ### Right column
 
 | Seat | Kind | Notes |
 |---|---|---|
-| `rightbar`, `rightbar.session` | — | *occupied* — the right column and its Session-bound surface |
-| `sidebar.right.pane.tab`, `sidebar.right.pane.tab.title` | — | right-panel tabs |
-| `sidebar.right.tab.*` | — | per-tab content, actions and menu items |
+| `rightbar` | — | *occupied* — the right column |
+| `rightbar.session` | — | one Session-bound subtree. Each View owns its Session reference; only the foreground subtree reports a frame track, and the others stay hidden without deleting tab state |
+| `sidebar.right.pane.tab` | keyed | a right-panel tab **body**, keyed by the tab definition's `id`; the body reads `{ sidebar, panel, tab }` through the framework's `useTabInfo()` |
+| `sidebar.right.pane.tab.title` | keyed | that tab's title. Omitted, the text captured at open time is used |
+| `sidebar.right.tab.document`, `sidebar.right.tab.document.action`, `sidebar.right.tab.document.actions`, `sidebar.right.tab.document.unpreviewable` | — | the document-preview tab's body, its single action, its action row, and its unpreviewable state |
+| `sidebar.right.tab.files.actions` | — | the files tab's action row |
+| `sidebar.right.tab.guide` | chain | replaces the guide tab's **body** without replacing the tab |
+| `sidebar.right.tab.guide.entry` | keyed | one guide entry, by its active definition id |
+| `sidebar.right.tab.menu.item` | list | content-level actions appended to a tab's menu, after the kit's own layout actions |
+
+### Workspace surfaces
+
+| Seat | Kind | Notes |
+|---|---|---|
+| `workspace.create` | — | the **Add workspace…** action. It renders only while its directory-flow hole is occupied, so an empty hole means the composition has no picking affordance |
+| `workspace.files` | — | the workspace file surface |
+| `workspace.toast` | keyed | the notice overlay, dispatched by notice kind. Keyed registrations inject localized display mappings and their own actions; only archive notices subscribe to the viewing filter |
+| `workspace.toast.content` | — | the shared Toast body every presentation reuses |
 
 ## Host extension points
 

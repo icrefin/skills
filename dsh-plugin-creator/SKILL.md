@@ -47,7 +47,7 @@ reported. Work in the user's workspace, never inside this skill directory.
 
    The template is a working dual-face plugin: an HTTP route, a sidebar row, a
    page, locale dictionaries, real tests, and an isolated-profile dev script. It
-   typechecks, builds and tests clean against dsh 0.2.0-rc.2 — replace what you do
+   typechecks, builds and tests clean against dsh 0.2.1-rc.2 — replace what you do
    not need rather than starting from empty files.
 3. **Implement the host half** — `references/host-half.md`: export forms,
    `ctx.effect`, schemastery `Config`, event and waterfall listeners, `webServer`
